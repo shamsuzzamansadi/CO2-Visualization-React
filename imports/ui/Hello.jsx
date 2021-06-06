@@ -9,7 +9,9 @@ export const Hello = () => {
     setCounter(counter + 1);
   };
 
+  
   let carbonValue = CarbonValuesCollection.find().fetch();
+  
   const carbonlevelNotify = () => {
     if(carbonValue.level['green']){
       push.create('green');
