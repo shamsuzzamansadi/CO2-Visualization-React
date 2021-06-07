@@ -12,7 +12,7 @@ export const Info = () => {
       <h2>Learn about CO2!</h2>
       <ul>{carbonValues.map(
         carbonValue => <li key={carbonValue._id}>
-          <p>{carbonValue.value}{link.level}</p>
+          <p>{carbonValue.level} {carbonValue.value}</p>
         </li>
       )}</ul>
     </div>

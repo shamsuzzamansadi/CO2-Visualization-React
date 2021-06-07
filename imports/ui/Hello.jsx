@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import push from 'push.js';
-import { CarbonValuesCollection } from '../api/carbons.js';
+import { CarbonValuesCollection } from '../api/carbonValues.js';
 
 export async function Hello() {
   const [counter, setCounter] = useState(0);
@@ -16,14 +16,15 @@ export async function Hello() {
     console.log('carbon level:',carbonValue[i].level);
   }
 
-  const carbonlevelNotify = async () => {
-    if(await carbonValue.level['green']){
+  const carbonlevelNotify = () => {
+    console.log('co2 dataset: ',carbonValue);
+    if(await carbonValue.value <= 1000){
       await push.create('green');
     }
-    else if(await carbonValue.level['yellow']){
+    else if(await carbonValue.value > 1000 && await carbonValue.value <= 2000){
      await push.create('yellow');
     }
-    else if(await carbonValue.level['red']) {
+    else if(await carbonValue.value > 2000) {
       await push.create('red');
     }
   };
@@ -32,7 +33,7 @@ export async function Hello() {
     <div>
       <button onClick={increment}>Click Me</button>
       <p>You've pressed the button {counter} times.</p>
-      <p>You've started the carbonNotification: Level of color: {carbonlevelNotify.level} Carbon value: {carbonlevelNotify.value} times.</p>
+      <p>You've started the carbonNotification: {carbonlevelNotify()} times.</p>
     </div>
   );
 };

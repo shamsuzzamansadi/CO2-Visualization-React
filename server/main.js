@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { CarbonValuesCollection } from '/imports/api/carbons.js';
+import { CarbonValuesCollection } from '/imports/api/carbonValues.js';
 
 // function insertLink({ title, url }) {
 //   LinksCollection.insert({title, url, createdAt: new Date()});
