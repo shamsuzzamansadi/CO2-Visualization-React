@@ -11,7 +11,10 @@ export const Hello = () => {
 
   
   let carbonValue = CarbonValuesCollection.find().fetch();
-  
+  for(i=0; i < carbonValue.length; i++){
+    console.log(carbonValue[i].level);
+  }
+
   const carbonlevelNotify = () => {
     if(carbonValue.level['green']){
       push.create('green');
@@ -22,7 +25,7 @@ export const Hello = () => {
     else if(carbonValue.level['red']){
       push.create('red');
     }
-  };
+  }
   
   return (
     <div>
