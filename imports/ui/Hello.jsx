@@ -18,12 +18,15 @@ export function Hello() {
     
     if(carbonValue.value <= 1000){
        Push.create('green');
+       console.log('green co2');
     }
     else if( carbonValue.value > 1000 && carbonValue.value <= 2000){
      Push.create('yellow');
+     console.log('yellow');
     }
     else if( carbonValue.value > 2000) {
       Push.create('red');
+      console.log('red');
     }
   };
   
