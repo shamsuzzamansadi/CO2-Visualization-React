@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import push from 'push.js';
+import Push from 'push.js';
 import { CarbonValuesCollection } from '../api/carbonValues.js';
 
-export async function Hello() {
+export function Hello() {
   const [counter, setCounter] = useState(0);
   const timeout = millis => new Promise(resolve => setTimeout(resolve, millis));
   const increment = () => {
@@ -10,22 +10,20 @@ export async function Hello() {
   };
 
 
-  let carbonValue = await CarbonValuesCollection.find().fetch();
-  timeout(10000);
-  for(i=0; i < carbonValue.length; i++){
-    console.log('carbon level:',carbonValue[i].level);
-  }
-
+  let carbonValue = CarbonValuesCollection.find().fetch();
+ 
   const carbonlevelNotify = () => {
     console.log('co2 dataset: ',carbonValue);
-    if(await carbonValue.value <= 1000){
-      await push.create('green');
+    console.log('CO2 value: ',carbonValue.value, 'CO2 level: ', carbonValue.level);
+    
+    if(carbonValue.value <= 1000){
+       Push.create('green');
     }
-    else if(await carbonValue.value > 1000 && await carbonValue.value <= 2000){
-     await push.create('yellow');
+    else if( carbonValue.value > 1000 && carbonValue.value <= 2000){
+     Push.create('yellow');
     }
-    else if(await carbonValue.value > 2000) {
-      await push.create('red');
+    else if( carbonValue.value > 2000) {
+      Push.create('red');
     }
   };
   
@@ -33,7 +31,7 @@ export async function Hello() {
     <div>
       <button onClick={increment}>Click Me</button>
       <p>You've pressed the button {counter} times.</p>
-      <p>You've started the carbonNotification: {carbonlevelNotify()} times.</p>
+      <p>You've started Carbon value: {carbonlevelNotify()}.</p>
     </div>
   );
 };
