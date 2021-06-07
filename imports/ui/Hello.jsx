@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 import push from 'push.js';
-import CarbonValuesCollection from '../api/carbonValues.js';
+import { CarbonValuesCollection } from '../api/carbons.js';
 
-export const Hello = () => {
+export async function Hello() {
   const [counter, setCounter] = useState(0);
-
+  const timeout = millis => new Promise(resolve => setTimeout(resolve, millis));
   const increment = () => {
     setCounter(counter + 1);
   };
 
-  
-  let carbonValue = CarbonValuesCollection.find().fetch();
+
+  let carbonValue = await CarbonValuesCollection.find().fetch();
+  timeout(10000);
   for(i=0; i < carbonValue.length; i++){
-    console.log(carbonValue[i].level);
+    console.log('carbon level:',carbonValue[i].level);
   }
 
-  const carbonlevelNotify = () => {
-    if(carbonValue.level['green']){
-      push.create('green');
+  const carbonlevelNotify = async () => {
+    if(await carbonValue.level['green']){
+      await push.create('green');
     }
-    else if(carbonValue.level['yellow']){
-      push.create('yellow');
+    else if(await carbonValue.level['yellow']){
+     await push.create('yellow');
     }
-    else if(carbonValue.level['red']){
-      push.create('red');
+    else if(await carbonValue.level['red']) {
+      await push.create('red');
     }
-  }
+  };
   
   return (
     <div>
       <button onClick={increment}>Click Me</button>
       <p>You've pressed the button {counter} times.</p>
-      <p>Well have fun with the co2 level: {carbonlevelNotify} </p> 
+      <p>You've started the carbonNotification: Level of color: {carbonlevelNotify.level} Carbon value: {carbonlevelNotify.value} times.</p>
     </div>
   );
 };
